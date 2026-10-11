@@ -1,0 +1,154 @@
+{
+  "name": "@comify.art/thuli",
+  "version": "1.0.0",
+  "description": "Shared UI components, content management systems, and utilities for comify.art applications",
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./style.css": "./dist/style.css",
+    "./layout": {
+      "types": "./dist/layout/index.d.ts",
+      "import": "./dist/layout/index.js"
+    },
+    "./layout/*": {
+      "types": "./dist/layout/*.d.ts",
+      "import": "./dist/layout/*.js"
+    },
+    "./blog": {
+      "types": "./dist/blog/index.d.ts",
+      "import": "./dist/blog/index.js"
+    },
+    "./blog/*": {
+      "types": "./dist/blog/*.d.ts",
+      "import": "./dist/blog/*.js"
+    },
+    "./verse-books": {
+      "types": "./dist/verse-books/index.d.ts",
+      "import": "./dist/verse-books/index.js"
+    },
+    "./verse-books/*": {
+      "types": "./dist/verse-books/*.d.ts",
+      "import": "./dist/verse-books/*.js"
+    },
+    "./services": {
+      "types": "./dist/services/index.d.ts",
+      "import": "./dist/services/index.js"
+    },
+    "./services/*": {
+      "types": "./dist/services/*.d.ts",
+      "import": "./dist/services/*.js"
+    },
+    "./tracker": {
+      "types": "./dist/tracker/index.d.ts",
+      "import": "./dist/tracker/index.js"
+    },
+    "./tracker/*": {
+      "types": "./dist/tracker/*.d.ts",
+      "import": "./dist/tracker/*.js"
+    },
+    "./auth": {
+      "types": "./dist/auth/index.d.ts",
+      "import": "./dist/auth/index.js"
+    },
+    "./auth/*": {
+      "types": "./dist/auth/*.d.ts",
+      "import": "./dist/auth/*.js"
+    },
+    "./ui": {
+      "types": "./dist/ui/index.d.ts",
+      "import": "./dist/ui/index.js"
+    },
+    "./ui/*": {
+      "types": "./dist/ui/*.d.ts",
+      "import": "./dist/ui/*.js"
+    },
+    "./utils": {
+      "types": "./dist/utils/index.d.ts",
+      "import": "./dist/utils/index.js"
+    },
+    "./utils/*": {
+      "types": "./dist/utils/*.d.ts",
+      "import": "./dist/utils/*.js"
+    },
+    "./router": {
+      "types": "./dist/router/index.d.ts",
+      "import": "./dist/router/index.js"
+    },
+    "./router/*": {
+      "types": "./dist/router/*.d.ts",
+      "import": "./dist/router/*.js"
+    },
+    "./types": {
+      "types": "./dist/types/index.d.ts"
+    },
+    "./types/*": {
+      "types": "./dist/types/*.d.ts"
+    }
+  },
+  "sideEffects": [
+    "*.css"
+  ],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build:js": "tsc",
+    "build:css": "npx @tailwindcss/cli -i ./src/index.css -o ./dist/style.css --minify",
+    "build": "npm run clean && npm run build:js && npm run build:css",
+    "type-check": "tsc --noEmit",
+    "package": "npm run build && npm pack"
+  },
+  "peerDependencies": {
+    "firebase": ">=10.0.0",
+    "katex": "^0.16.0",
+    "lucide-react": "*",
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0",
+    "react-markdown": "^10.0.0",
+    "react-router-dom": ">=6.0.0",
+    "rehype-katex": "^7.0.0",
+    "remark-gfm": "^4.0.0",
+    "remark-math": "^6.0.0"
+  },
+  "peerDependenciesMeta": {
+    "katex": {
+      "optional": true
+    },
+    "rehype-katex": {
+      "optional": true
+    },
+    "remark-math": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "remark-breaks": "^4.0.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.1.18",
+    "@types/katex": "^0.16.8",
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "@vitejs/plugin-react": "^5.1.4",
+    "autoprefixer": "^10.4.24",
+    "katex": "^0.19.0",
+    "postcss": "^8.5.6",
+    "rehype-katex": "^7.0.1",
+    "remark-math": "^6.0.0",
+    "tailwindcss": "^4.1.18",
+    "typescript": "^5.0.0",
+    "vite": "^7.3.1",
+    "vite-plugin-dts": "^4.5.4"
+  }
+}

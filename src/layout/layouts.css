@@ -1,0 +1,201 @@
+@import "tailwindcss";
+
+@layer components {
+
+    /* App Shell */
+    .app-shell-root {
+        @apply flex flex-col min-h-screen font-sans text-foreground;
+    }
+
+    .app-main {
+        @apply flex-grow flex flex-col pt-20;
+    }
+
+    /* Navbar */
+    .navbar-root {
+        @apply fixed top-0 w-full z-50 transition-all duration-300;
+    }
+
+    .navbar-root.scrolled {
+        @apply bg-slate-900/80 backdrop-blur-md shadow-sm border-b border-slate-700/50;
+    }
+
+    .navbar-root.transparent {
+        @apply bg-transparent;
+    }
+
+    .navbar-container {
+        @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    }
+
+    .navbar-content {
+        @apply flex justify-between items-center h-20;
+    }
+
+    .navbar-logo-link {
+        @apply flex-shrink-0 flex items-center gap-2;
+    }
+
+    .navbar-logo-img {
+        @apply h-12 w-auto;
+    }
+
+    .navbar-desktop-nav {
+        @apply hidden md:flex items-center space-x-8;
+    }
+
+    .navbar-link {
+        @apply text-sm font-medium transition-colors duration-200 text-slate-300 hover:text-accent;
+    }
+
+    .navbar-link.active {
+        @apply text-accent;
+    }
+
+    .navbar-mobile-toggle {
+        @apply md:hidden flex items-center;
+    }
+
+    .navbar-toggle-btn {
+        @apply hover:text-accent focus:outline-none text-slate-300 flex items-center gap-2;
+    }
+
+    .navbar-toggle-btn.scrolled {
+        @apply text-slate-300;
+    }
+
+    .navbar-toggle-btn.transparent {
+        @apply text-white;
+    }
+
+    .navbar-brand-text {
+        @apply text-xl font-bold mr-2 whitespace-nowrap text-white;
+    }
+
+    .navbar-brand-text.scrolled {
+        @apply text-white;
+    }
+
+    .navbar-brand-text.transparent {
+        @apply text-white;
+    }
+
+    .navbar-mobile-menu {
+        @apply md:hidden bg-slate-900/95 backdrop-blur-md border-t border-slate-800 absolute w-full;
+    }
+
+    .navbar-mobile-menu-container {
+        @apply px-4 pt-2 pb-6 space-y-2 shadow-lg;
+    }
+
+    .navbar-mobile-link {
+        @apply block px-3 py-3 rounded-md text-base font-medium text-slate-300 hover:bg-slate-800 hover:text-accent;
+    }
+
+    .navbar-mobile-link.active {
+        @apply bg-slate-800 text-accent;
+    }
+
+    /* Footer */
+    .footer-root {
+        @apply bg-slate-900 text-slate-300 py-12 border-t border-slate-800;
+    }
+
+    .footer-container {
+        @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    }
+
+    .footer-grid {
+        @apply grid grid-cols-1 md:grid-cols-4 gap-8;
+    }
+
+    .footer-brand-col {
+        @apply space-y-4;
+    }
+
+    .footer-logo-wrapper {
+        @apply flex items-center gap-2;
+    }
+
+    .footer-logo-img {
+        @apply h-10 w-auto brightness-0 invert;
+    }
+
+    .footer-desc {
+        @apply text-sm text-slate-400;
+    }
+
+    .footer-heading {
+        @apply text-white font-semibold mb-4;
+    }
+
+    .footer-links-list {
+        @apply space-y-2 text-sm;
+    }
+
+    .footer-link {
+        @apply hover:text-primary transition-colors;
+    }
+
+    .footer-contact-icons {
+        @apply flex space-x-4 pt-2;
+    }
+
+    .footer-contact-link {
+        @apply text-slate-400 hover:text-primary transition-colors;
+    }
+
+    .footer-address-item {
+        @apply flex items-start gap-2;
+    }
+
+    .footer-icon-shim {
+        @apply mt-1 flex-shrink-0;
+    }
+
+    .footer-bottom {
+        @apply mt-12 pt-8 border-t border-slate-800 text-center text-xs text-slate-500;
+    }
+
+    .footer-version {
+        @apply text-slate-500 ml-2;
+    }
+
+    /* Two Column Layout Styles */
+    .app-layout-container {
+        @apply flex flex-col md:flex-row h-full w-full overflow-hidden;
+    }
+
+    .sidebar-area {
+        @apply w-full md:w-[15%] flex-none border-b md:border-b-0 md:border-r border-slate-200 dark:border-slate-700 py-5 overflow-y-auto;
+    }
+
+    .detail-area {
+        @apply flex-1 w-full md:w-[85%] p-5 overflow-y-auto;
+    }
+
+    .detail-header {
+        @apply mt-0 pb-2 border-b border-slate-200 dark:border-slate-700;
+    }
+
+    /* Since Sidebar component uses .sidebar-container, we define it here if needed or let it use default block behavior */
+    .sidebar-container {
+        @apply w-full h-auto;
+    }
+
+    .sidebar-title {
+        @apply text-2xl text-accent px-4 mb-2;
+    }
+
+    .action-button {
+        @apply w-full flex items-center gap-2 px-4 py-2 text-left text-slate-400 hover:text-accent transition-colors;
+    }
+
+    .action-button.active {
+        @apply bg-slate-800 text-accent font-bold;
+    }
+
+    .sidebar-section-header {
+        @apply text-sm text-slate-500 uppercase font-bold px-4 mt-2 pb-1 border-b border-slate-800;
+    }
+}

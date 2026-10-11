@@ -1,0 +1,17 @@
+@import "tailwindcss";
+@import "./layout/layouts.css";
+@import "./blog/ui/BlogPost.css";
+@import "./blog/admin/admin-surface.css";
+
+/* Class-based dark mode. Host apps that want dark always-on add
+   `class="dark"` to the <html> element. Without this override, Tailwind v4
+   defaults to `prefers-color-scheme: dark`, which means OS-light users get
+   no dark styling even when the app is visually dark-themed. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+    --color-foreground: var(--foreground);
+    --color-background: var(--background);
+    --color-primary: var(--primary);
+    --color-accent: var(--accent);
+}

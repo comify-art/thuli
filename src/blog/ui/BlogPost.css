@@ -1,0 +1,69 @@
+/* Markdown Content Styling */
+.prose {
+    color: #cbd5e1;
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4 {
+    margin-top: 2em;
+    margin-bottom: 0.8em;
+    line-height: 1.2;
+}
+
+.prose p {
+    margin-bottom: 1.5em;
+    line-height: 1.8;
+}
+
+.prose ul,
+.prose ol {
+    margin-bottom: 1.5em;
+    padding-left: 1.5em;
+}
+
+.prose li {
+    margin-bottom: 0.5em;
+}
+
+.prose blockquote {
+    border-left: 4px solid var(--accent-color);
+    padding-left: 1rem;
+    font-style: italic;
+    color: #94a3b8;
+    margin: 2em 0;
+}
+
+.prose pre {
+    background: #1e293b;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    margin-bottom: 1.5em;
+}
+
+.prose code {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.25rem;
+    font-size: 0.9em;
+}
+
+.prose pre code {
+    background: transparent;
+    padding: 0;
+}
+
+.prose img {
+    border-radius: 0.5rem;
+    margin: 2rem auto;
+    display: block;
+    max-width: 100%;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.prose hr {
+    border-color: #334155;
+    margin: 3rem 0;
+}
