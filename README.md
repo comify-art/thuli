@@ -13,6 +13,9 @@
 Detailed documentation and reference implementations:
 
 - 🚀 **[Getting Started](./docs/getting-started.md)**: Installation, peer dependencies, and styling setup.
+- 🔌 **[Integration Guide](./docs/integration-guide.md)**: Comprehensive host app wiring and usage manual.
+- 🔥 **[Firebase Backend Setup](./docs/setup-firebase.md)**: Firestore collections, security rules, Storage CORS, and Auth.
+- 📊 **[Analytics & Tracking](./docs/setup-analytics.md)**: Google Analytics setup, page views, and activity tracking.
 - 📦 **[Module Reference](./docs/modules.md)**: Comprehensive guide to subpath entrypoints (`/layout`, `/blog`, `/services`, etc.).
 - 🏗️ **[Architecture & Design](./docs/architecture.md)**: Dependency tiering, styling architecture, and build pipeline.
 - 💻 **[Sample Applications](./samples)**: Working reference implementation in [`samples/simple-app`](./samples/simple-app) demonstrating select components (`Navbar`, `Footer`, `Modal`, `ConfirmationModal`, `ComingSoon`).
@@ -83,6 +86,9 @@ export function BlogArticle({ slug }: { slug: string }) {
 thuli/
 ├── docs/                   # Documentation guides
 │   ├── getting-started.md  # Quickstart and peer dependency setup
+│   ├── integration-guide.md# Complete host application wiring guide
+│   ├── setup-firebase.md   # Firestore rules, Storage CORS, and Auth
+│   ├── setup-analytics.md  # Google Analytics and activity tracking
 │   ├── modules.md          # Subpath reference and API exports
 │   └── architecture.md     # Architectural principles and styling
 ├── samples/                # Reference applications
