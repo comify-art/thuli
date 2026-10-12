@@ -18,6 +18,7 @@ Detailed documentation and reference implementations:
 - 📊 **[Analytics & Tracking](./docs/setup-analytics.md)**: Google Analytics setup, page views, and activity tracking.
 - 📦 **[Module Reference](./docs/modules.md)**: Comprehensive guide to subpath entrypoints (`/layout`, `/blog`, `/services`, etc.).
 - 🏗️ **[Architecture & Design](./docs/architecture.md)**: Dependency tiering, styling architecture, and build pipeline.
+- 🚀 **[Publishing & Governance](./docs/publishing-guide.md)**: First-time publishing instructions, branch protection (`main`), and CI/CD.
 - 💻 **[Sample Applications](./samples)**: Working reference implementation in [`samples/simple-app`](./samples/simple-app) demonstrating select components (`Navbar`, `Footer`, `Modal`, `ConfirmationModal`, `ComingSoon`).
 
 ---
