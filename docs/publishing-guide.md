@@ -119,9 +119,16 @@ Runs automatically on:
 
 ### 3.3 Automated Publishing (`.github/workflows/publish.yml`)
 When you release a new version:
-1. Bump version locally (`npm version patch`, `minor`, or `major`).
-2. Push the commit and tag to GitHub via a Pull Request.
-3. In GitHub, create a **Release** from the tag.
-4. The GitHub Action will automatically:
-   - Run the complete CI verification suite.
+1. **Bump version locally**:
+   ```bash
+   npm version patch   # or minor, major
+   ```
+2. **Execute Combined Release** (pushes commit + tag, builds package, and creates GitHub Release):
+   ```bash
+   make release
+   ```
+   *(Or one-step: `make release-patch`, `make release-minor`, `make release-major`)*
+
+3. The GitHub Actions workflow (`publish.yml`) will automatically:
+   - Run the complete CI verification suite (type-checks, tests, builds).
    - Publish the package to npmjs.org with cryptographic **npm provenance** using OIDC **Trusted Publishing** (no persistent tokens needed).
