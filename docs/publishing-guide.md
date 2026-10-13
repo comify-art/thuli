@@ -124,5 +124,4 @@ When you release a new version:
 3. In GitHub, create a **Release** from the tag.
 4. The GitHub Action will automatically:
    - Run the complete CI verification suite.
-   - Publish the package to npmjs.org with cryptographic **npm provenance**.
-   *(Requires adding your `NPM_TOKEN` as a secret under Repository Settings > Secrets and variables > Actions > NPM_TOKEN).*
+   - Publish the package to npmjs.org with cryptographic **npm provenance** using OIDC **Trusted Publishing** (no persistent tokens needed).
