@@ -1,6 +1,6 @@
 {
   "name": "@comify.art/thuli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Shared UI components, content management systems, and utilities for comify.art applications",
   "license": "Apache-2.0",
   "type": "module",
