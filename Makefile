@@ -1,5 +1,5 @@
 # Orchestration & Release Makefile for @comify.art/thuli
-# Location: ~/src/externals/comify.art/thuli/
+# Location: comify.art/thuli/
 
 SHELL := bash
 .SHELLFLAGS := -eu -o pipefail -c
