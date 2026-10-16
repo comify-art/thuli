@@ -39,5 +39,5 @@ jobs:
       - name: Validate Sample Application
         run: |
           cd samples/simple-app
-          npm ci
+          npm install ../../dist/comify.art-thuli-*.tgz
           npm run build
