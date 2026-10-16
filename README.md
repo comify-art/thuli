@@ -1,6 +1,6 @@
 # @comify.art/thuli
 
-[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)  [![npm version](https://img.shields.io/npm/v/@comify.art/thuli.svg)](https://www.npmjs.com/package/@comify.art/thuli)
 
 > Shared UI components, layout structures, content publishing engines, and Firebase service utilities for **comify.art** web applications.
 

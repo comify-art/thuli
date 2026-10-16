@@ -1,59 +1,49 @@
 # Publishing & Repository Governance Guide
 
 This guide details:
-1. How to perform the **first-time publish** of `@comify.art/thuli` to [npmjs.org](https://www.npmjs.com).
-2. How to **lock down the `main` branch** on GitHub to enforce Pull Requests and required CI checks.
-3. How the **automated Test & CI/CD pipeline** works.
+1. **npm Setup & Trusted Publishing (OIDC)**: Linking npmjs.com to GitHub Actions without long-lived tokens.
+2. **Branch Protection & Governance**: Enforcing Pull Requests and mandatory status checks on `main`.
+3. **Automated Release Pipeline**: Using `make release-*` and GitHub Actions with cryptographic Sigstore provenance.
 
 ---
 
-## 1. First-Time Publishing to npmjs.org
+## 1. npm Trusted Publishing (OIDC) & Provenance Setup
+
+`@comify.art/thuli` uses tokenless **Trusted Publishing (OpenID Connect / OIDC)**. GitHub Actions automatically generates a short-lived OIDC token to authenticate with the public npm registry, eliminating the need for persistent personal access tokens (`NPM_TOKEN`).
 
 ### 1.1 Prerequisites
-1. **NPM Account**: An account registered on [npmjs.org](https://www.npmjs.com) with Two-Factor Authentication (2FA) enabled.
-2. **Organization Access**: Ensure your npm account is an **Owner** or **Admin** of the `@comify.art` organization on npmjs.org.
+1. **NPM Account**: An account on [npmjs.com](https://www.npmjs.com) with Two-Factor Authentication (2FA) enabled.
+2. **Organization Membership**: Owner or Admin of the `@comify.art` organization on npmjs.com.
+3. **Initial Version**: The package must be claimed on npm at least once (e.g. `v1.0.0`) via manual publish before OIDC trusted publishing can be configured.
 
-### 1.2 Step-by-Step Terminal Instructions
+### 1.2 Trusted Publisher Configuration on npmjs.com
+To link GitHub Actions to npmjs.com:
+1. Navigate to: `https://www.npmjs.com/package/@comify.art/thuli/access`
+2. Under **Trusted Publishers**, click **Add publisher** and select **GitHub Actions**.
+3. Configure the fields with exact values:
+   - **Organization or user**: `comify-art` *(matches GitHub repository owner; note hyphen, not dot)*
+   - **Repository**: `thuli`
+   - **Workflow filename**: `publish.yml` *(do not prefix with `.github/workflows/`)*
+   - **Environment name**: *(leave blank unless a GitHub Environment is used)*
+   - **Allowed actions**: Check **`npm publish`** to allow automated continuous deployment. *(Leaving this unchecked restricts to staged publishing, requiring manual 2FA approval for each release).*
+4. Click **Add publisher**.
 
-#### Step 1: Authenticate with npm
-In your terminal, run:
-```bash
-npm login
+> [!IMPORTANT]
+> **48-Hour Validation Window**: After adding a trusted publisher, the first workflow publish must execute successfully within 48 hours; otherwise, npm will automatically expire the unvalidated configuration.
+
+### 1.3 Cryptographic Provenance Requirement (`package.json`)
+The publish workflow runs `npm publish --provenance`, which signs a cryptographic provenance statement via Sigstore. For provenance verification to succeed, `package.json` must declare the matching Git repository:
+
+```json
+"repository": {
+  "type": "git",
+  "url": "https://github.com/comify-art/thuli.git"
+},
+"homepage": "https://github.com/comify-art/thuli#readme",
+"bugs": {
+  "url": "https://github.com/comify-art/thuli/issues"
+}
 ```
-Follow the browser or one-time code prompt to authenticate. Verify your active login:
-```bash
-npm whoami
-```
-
-#### Step 2: Navigate to Library Root
-```bash
-cd /Users/murali/src/externals/comify.art/thuli
-```
-
-#### Step 3: Run Full Verification Suite
-Ensure clean build, type check, and unit test pass:
-```bash
-npm run clean
-npm run type-check
-npm test
-npm run build
-```
-
-#### Step 4: Dry-Run Inspection
-Verify that only expected files in `dist/`, `README.md`, and `LICENSE` will be uploaded:
-```bash
-npm publish --access public --dry-run
-```
-Inspect the output. You should see 229 files, ~117 kB archive size, with no private source or environment files.
-
-#### Step 5: Perform Initial Publish
-Publish the package with public access:
-```bash
-npm publish --access public
-```
-
-Once completed, your package will be immediately live and installable worldwide at:
-`https://www.npmjs.com/package/@comify.art/thuli`
 
 ---
 
