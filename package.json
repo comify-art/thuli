@@ -1,8 +1,16 @@
 {
   "name": "@comify.art/thuli",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Shared UI components, content management systems, and utilities for comify.art applications",
   "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/comify-art/thuli.git"
+  },
+  "homepage": "https://github.com/comify-art/thuli#readme",
+  "bugs": {
+    "url": "https://github.com/comify-art/thuli/issues"
+  },
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
