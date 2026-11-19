@@ -35,4 +35,14 @@
     --color-border-default: var(--border-default);
     --color-border-subtle: var(--border-subtle);
     --color-accent-primary: var(--accent-primary);
+    --color-brand-200: var(--brand-200, #bfdbfe);
+    --color-brand-300: var(--brand-300, #93c5fd);
+    --color-brand-400: var(--brand-400, #60a5fa);
+    --color-brand-500: var(--brand-500, #3b82f6);
+    --color-brand-600: var(--brand-600, #2563eb);
+    --color-brand-950: var(--brand-950, #172554);
+    --color-brand-gold-200: var(--brand-gold-200, #fde68a);
+    --color-brand-gold-300: var(--brand-gold-300, #fcd34d);
+    --color-brand-gold-400: var(--brand-gold-400, #fbbf24);
+    --color-brand-gold-500: var(--brand-gold-500, #f59e0b);
 }
