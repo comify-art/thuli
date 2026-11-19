@@ -1,35 +1,39 @@
 # Getting Started with `@comify.art/thuli`
 
-## 1. Installation
+This guide shows you how to install `@comify.art/thuli`, add its peer dependencies, and configure dark-first CSS tokens.
+
+## 1. Install the Package
+
+Run this command in your project root:
 
 ```bash
 npm install @comify.art/thuli
 ```
 
-## 2. Peer Dependencies
+## 2. Install Peer Dependencies
 
-Install the peer dependencies required by your application:
+Install the required peer dependencies in your host app:
 
 ```bash
 npm install react react-dom react-router-dom firebase lucide-react \
   react-markdown remark-gfm
 ```
 
-If you use mathematical rendering in `MarkdownRenderer`, also install the optional KaTeX peers:
+If you render math formulas with `MarkdownRenderer`, also install the KaTeX packages:
 
 ```bash
 npm install katex rehype-katex remark-math
 ```
 
-## 3. Dark-First CSS & Theme Token Setup
+## 3. Import the Stylesheet
 
-Import the compiled Thuli stylesheet once in your application entrypoint (`main.tsx` or `index.css`):
+Import the compiled Thuli stylesheet once in your app entry file (`src/main.tsx` or `src/index.css`):
 
 ```tsx
 import '@comify.art/thuli/style.css';
 ```
 
-`@comify.art/thuli/style.css` includes default `:root` CSS variable fallbacks for dark-first surfaces and borders:
+This stylesheet sets default dark-first CSS variables on `:root`:
 
 ```css
 :root {
@@ -44,15 +48,15 @@ import '@comify.art/thuli/style.css';
 }
 ```
 
-To customize the palette for your brand, override these CSS variables in your host stylesheet after importing `@comify.art/thuli/style.css`.
+To change the theme colors, override these variables in your own CSS file after you import `@comify.art/thuli/style.css`.
 
-For class-based dark mode with Tailwind v4, add `class="dark"` to your `<html>` element.
+To enable class-based dark mode in Tailwind v4, add `class="dark"` to your `<html>` element.
 
-## 4. Importing from Canonical Containers
+## 4. Import from the 4 Containers
 
-Prefer importing from the 4 canonical containers for optimal tree-shaking:
+Import modules from their container subpaths to keep your bundle small:
 
-- `@comify.art/thuli/core` — Pure TypeScript utilities & token contracts (zero React dependencies)
-- `@comify.art/thuli/ui/primitives`, `/ui/feedback`, `/ui/layout` — Visual UI components
-- `@comify.art/thuli/integrations/calendar`, `/integrations/whatsapp`, `/integrations/firebase` — 3rd-party protocol & SDK bridges
-- `@comify.art/thuli/features/access`, `/features/publishing`, `/features/literature`, `/features/tracker`, `/features/documents` — Turnkey domain modules
+- `@comify.art/thuli/core` — Pure TypeScript utilities and CSS token names.
+- `@comify.art/thuli/ui/primitives`, `/ui/feedback`, `/ui/layout` — React UI components.
+- `@comify.art/thuli/integrations/calendar`, `/whatsapp`, `/zoom`, `/firebase` — External service helpers and UI panels.
+- `@comify.art/thuli/features/access`, `/publishing`, `/literature`, `/tracker`, `/documents` — Complete feature modules.
