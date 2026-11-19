@@ -1,94 +1,62 @@
-# Getting Started with @comify.art/thuli
+# Getting Started with `@comify.art/thuli`
 
-`@comify.art/thuli` provides shared UI components, layout structures, content publishing tools, and Firebase utilities for web applications built with React and Tailwind CSS.
+This guide shows you how to install `@comify.art/thuli`, add its peer dependencies, and configure dark-first CSS tokens.
 
----
+## 1. Install the Package
 
-## 1. Installation
-
-Install the library from npm:
+Run this command in your project root:
 
 ```bash
 npm install @comify.art/thuli
 ```
 
-### Peer Dependencies
+## 2. Install Peer Dependencies
 
-Install the required peer dependencies in your host application:
+Install the required peer dependencies in your host app:
 
 ```bash
 npm install react react-dom react-router-dom firebase lucide-react \
-  react-markdown katex rehype-katex remark-gfm remark-math
+  react-markdown remark-gfm
 ```
 
----
+If you render math formulas with `MarkdownRenderer`, also install the KaTeX packages:
 
-## 2. Style Integration
+```bash
+npm install katex rehype-katex remark-math
+```
 
-`@comify.art/thuli` is designed with Tailwind CSS v4 and provides precompiled stylesheet distribution.
+## 3. Import the Stylesheet
 
-### Option A: Import Compiled CSS (Recommended)
-Import the precompiled stylesheet in your application's entrypoint (e.g., `main.tsx` or `App.tsx`):
+Import the compiled Thuli stylesheet once in your app entry file (`src/main.tsx` or `src/index.css`):
 
 ```tsx
 import '@comify.art/thuli/style.css';
 ```
 
-### Option B: Theme Variables Configuration
-Ensure your application provides or overrides the expected CSS custom properties in your root CSS:
+This stylesheet sets default dark-first CSS variables on `:root`:
 
 ```css
 :root {
-  --foreground: #0f172a;
-  --background: #ffffff;
-  --primary: #2563eb;
-  --accent: #f59e0b;
-}
-
-.dark {
-  --foreground: #f8fafc;
-  --background: #0f172a;
-  --primary: #3b82f6;
-  --accent: #fbbf24;
+  --surface-canvas: #0f172a;
+  --surface-panel: #1e293b;
+  --surface-modal: #1e293b;
+  --surface-card: #1e293b;
+  --surface-input: #182236;
+  --border-default: rgba(255, 255, 255, 0.08);
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --accent-primary: #3b82f6;
 }
 ```
 
----
+To change the theme colors, override these variables in your own CSS file after you import `@comify.art/thuli/style.css`.
 
-## 3. Basic Usage Example
+To enable class-based dark mode in Tailwind v4, add `class="dark"` to your `<html>` element.
 
-```tsx
-import React from 'react';
-import { AppShell } from '@comify.art/thuli/layout';
-import { BlogPostComponent } from '@comify.art/thuli/blog';
-import '@comify.art/thuli/style.css';
+## 4. Import from the 4 Containers
 
-export function BlogPostPage({ slug }: { slug: string }) {
-  return (
-    <AppShell>
-      <main className="max-w-4xl mx-auto px-4 py-8">
-        <BlogPostComponent slug={slug} />
-      </main>
-    </AppShell>
-  );
-}
-```
+Import modules from their container subpaths to keep your bundle small:
 
----
-
-## 4. Sample Application
-
-A complete reference application demonstrating select `@comify.art/thuli` components is available in the [`samples/`](../samples) directory:
-
-- **[`samples/simple-app`](../samples/simple-app)**: Demonstrates `Navbar`, `Footer`, `Modal`, `ConfirmationModal`, `ComingSoon`, `shareUtils`, and `@comify.art/thuli/style.css` in an interactive Vite + React app.
-
-See the [Samples Guide](../samples/README.md) for instructions on running the sample.
-
----
-
-## 5. Next Steps
-
-- Explore [Module Overview](modules.md) for full documentation on subpath entrypoints.
-- Review [Architecture Guide](architecture.md) for design patterns and dependency structures.
-- Explore [Sample Application](../samples/simple-app) for practical integration code.
-
+- `@comify.art/thuli/core` — Pure TypeScript utilities and CSS token names.
+- `@comify.art/thuli/ui/primitives`, `/ui/feedback`, `/ui/layout` — React UI components.
+- `@comify.art/thuli/integrations/calendar`, `/whatsapp`, `/zoom`, `/firebase` — External service helpers and UI panels.
+- `@comify.art/thuli/features/access`, `/publishing`, `/literature`, `/tracker`, `/documents` — Complete feature modules.

@@ -1,67 +1,63 @@
-# Architecture & Design Standards
+# Thuli 2.0 Architecture
 
-This document describes the architectural philosophy, dependency boundaries, security principles, and build pipeline for `@comify.art/thuli`.
+`@comify.art/thuli` v2.0 separates code into four containers. Each container only imports from containers below it:
 
----
-
-## 1. Design Philosophy
-
-1. **Host App Independence**: `@comify.art/thuli` does not maintain hardcoded configuration, singleton instances, or environment variables. All stateful services (such as Firebase auth or Firestore) are provided by the consuming application.
-2. **First-Class Subpath Exports**: Each domain module is an independent entry point in the package `exports` map, preventing unnecessary bundle bloat.
-3. **Open Standards**: Standardized under the **Apache-2.0** open-source license.
-4. **Security & Privacy Hygiene**: The library guarantees zero leakage of internal infrastructure details, private paths, or developer-specific metadata.
-
----
-
-## 2. Dependency Tiering
-
-To prevent duplicate runtime copies of libraries (such as React or Firebase SDK instances), dependencies are structured as follows:
-
-```mermaid
-graph TD
-    subgraph Host Application
-        H_R[React / ReactDOM]
-        H_FB[Firebase SDK]
-        H_TW[Tailwind CSS]
-    end
-
-    subgraph "@comify.art/thuli STYLES"
-        T_CSS[Precompiled style.css]
-    end
-
-    subgraph "@comify.art/thuli COMPONENTS"
-        T_M[Subpath Modules: /blog, /layout, /services, etc.]
-    end
-
-    H_R -.->|Peer Dependency| T_M
-    H_FB -.->|Peer Dependency| T_M
-    T_CSS -->|Imported into| H_TW
+```text
+core  <--  ui  <--  integrations  <--  features
 ```
 
-### Peer Dependencies
-- `react`, `react-dom` (`>=18.0.0`)
-- `react-router-dom` (`>=6.0.0`)
-- `firebase` (`>=10.0.0`)
-- `lucide-react` (`*`)
-- `react-markdown`, `remark-gfm`, `remark-math`, `rehype-katex`, `katex`
+## 1. The 4 Containers
 
-### Direct Dependencies
-- Limited strictly to runtime utility transforms (e.g. `remark-breaks`).
+### Container 1: `core` (`@comify.art/thuli/core`)
+- Contains pure TypeScript functions and CSS token constants.
+- Has zero React or DOM component dependencies.
+- Includes `tokens.ts`, `currency.ts`, `csv.ts`, `phone.ts`, `cookies.ts`, `images.ts`, and `share.ts`.
+
+### Container 2: `ui` (`@comify.art/thuli/ui`)
+- Contains reusable visual React components without app-specific business logic.
+- Organized into three folders:
+  - `primitives/`: `Modal`, `ConfirmationModal`, `Alert`, `Drawer`, `DataTable`, `SortableHeader`, `MetricStrip`, `ProgressMeter`, `StatusBadge`, `FormField`, `KpiCard`, `PageHeader`, `EmptyState`, `CopyButton`, `PaginationFooter`, `useCursorPagination`.
+  - `feedback/`: `ComingSoon`, `MarkdownRenderer`.
+  - `layout/`: `AppShell`, `Navbar`, `Footer`, `Sidebar`, `TwoColumnLayout`, `MasterDetailLayout`, `PageMeta`.
+
+### Container 3: `integrations` (`@comify.art/thuli/integrations`)
+- Connects your app to external tools and cloud services:
+  - `calendar/`: Builds RFC 5545 `.ics` files and Google/Outlook calendar links.
+  - `whatsapp/`: Builds `wa.me` links, group manifests, `WhatsAppSyndicateCard`, and `WhatsAppBroadcastConsole`.
+  - `zoom/`: Provides `ZoomSchedulePanel` and `ZoomRecordingPanel` UI controls. (Store API keys and OAuth tokens on your backend server, not in the browser.)
+  - `firebase/`: Provides `BaseAdminService` for Firestore CRUD and cursor pagination.
+
+### Container 4: `features` (`@comify.art/thuli/features`)
+- Combines UI, state, and services into complete product modules:
+  - `access/`: `AdminGate`, `useAdminGate`, `PrivateRoute`, `RoleGate`, `AccessGateCard`, `UserProfileMenu`, `useAuthSession`, `LockedPitchRecordingBanner`.
+  - `publishing/`: Blog reader, markdown editor, media library, and Firestore/Storage services.
+  - `literature/`: Book and verse reader, table of contents, pack-format parser, and services.
+  - `tracker/`: Activity dashboard, trend helpers, and logging service.
+  - `documents/`: `DocumentViewer` for PDFs with download fallback.
 
 ---
 
-## 3. Style Architecture
+## 2. Dark-First Theme Tokens
 
-- **Tailwind CSS v4**: Built natively on Tailwind v4 using `@theme` and `@custom-variant`.
-- **CSS Distribution**: Styles are compiled and distributed as a standalone `style.css` in the package root.
-- **Tree-Shaking Safety**: Declared with `"sideEffects": ["*.css"]` in `package.json` so bundlers safely prune unused JS modules while guaranteeing stylesheet inclusion when imported.
+In v1, `Modal` used light-mode classes (`bg-white dark:bg-gray-800`). Dark-themed apps without `<html class="dark">` showed a white modal background.
+
+In v2, all UI components read CSS custom properties defined in `src/index.css` and `src/core/tokens.ts`:
+
+| CSS Variable | Default Value | Used For |
+| :--- | :--- | :--- |
+| `--surface-canvas` | `#0f172a` | Page background |
+| `--surface-panel` | `#1e293b` | Sidebars, panels, drawers |
+| `--surface-modal` | `#1e293b` | Modal and confirmation dialogs |
+| `--surface-card` | `#1e293b` | Card containers |
+| `--surface-input` | `#182236` | Text inputs, selects, textareas |
+| `--border-default` | `rgba(255, 255, 255, 0.08)` | Container borders |
+| `--border-subtle` | `rgba(255, 255, 255, 0.06)` | Hairline dividers |
+| `--accent-primary` | `#3b82f6` | Primary buttons and focus rings |
 
 ---
 
-## 4. Build Pipeline
+## 3. Backwards Compatibility
 
-The package utilizes a multi-entry Vite library build pipeline:
-1. **TypeScript & Bundler**: Vite compile runs with externalized peer dependencies and emits clean modern ES modules.
-2. **Type Declarations**: `vite-plugin-dts` emits `.d.ts` declaration files mirroring each subpath entrypoint.
-3. **CSS Compilation**: `@tailwindcss/cli` compiles `src/index.css` to `dist/style.css`.
-4. **Package Tarball Verification**: Only `dist/`, `README.md`, and `LICENSE` are included in the published npm package.
+`package.json` exports both ESM (`import`) and TypeScript (`types`) entry points for every container.
+
+Legacy v1 paths (`/layout`, `/blog`, `/verse-books`, `/services`, `/tracker`, `/auth`, `/ui`, `/utils`, `/router`) stay active as thin re-export files that point to the v2 containers.
