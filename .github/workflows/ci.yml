@@ -36,8 +36,7 @@ jobs:
       - name: Verify Package Tarball
         run: npm run package
 
-      - name: Validate Sample Application
+      - name: Validate Dual Sample Harness
         run: |
-          cd samples/simple-app
-          npm install ../../dist/comify.art-thuli-*.tgz
-          npm run build
+          (cd samples/v1-classic-starter && npm install ../../dist/comify.art-thuli-*.tgz && npm run build)
+          (cd samples/v2-modern-portal && npm install ../../dist/comify.art-thuli-*.tgz && npm run build)
