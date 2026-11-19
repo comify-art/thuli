@@ -9,9 +9,30 @@
    no dark styling even when the app is visually dark-themed. */
 @custom-variant dark (&:where(.dark, .dark *));
 
+@layer base {
+    :root {
+        --surface-canvas: #0f172a;
+        --surface-panel: #1e293b;
+        --surface-modal: #1e293b;
+        --surface-card: #1e293b;
+        --surface-input: #182236;
+        --border-default: rgba(255, 255, 255, 0.08);
+        --border-subtle: rgba(255, 255, 255, 0.06);
+        --accent-primary: #3b82f6;
+    }
+}
+
 @theme {
     --color-foreground: var(--foreground);
     --color-background: var(--background);
     --color-primary: var(--primary);
     --color-accent: var(--accent);
+    --color-surface-canvas: var(--surface-canvas);
+    --color-surface-panel: var(--surface-panel);
+    --color-surface-modal: var(--surface-modal);
+    --color-surface-card: var(--surface-card);
+    --color-surface-input: var(--surface-input);
+    --color-border-default: var(--border-default);
+    --color-border-subtle: var(--border-subtle);
+    --color-accent-primary: var(--accent-primary);
 }

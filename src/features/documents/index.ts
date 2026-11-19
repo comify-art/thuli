@@ -1,2 +1,2 @@
-// Container 4: Documents Feature (scaffold)
-export {};
+// Container 4: Documents Feature
+export * from './DocumentViewer';

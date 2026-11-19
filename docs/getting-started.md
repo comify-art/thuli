@@ -1,94 +1,58 @@
-# Getting Started with @comify.art/thuli
-
-`@comify.art/thuli` provides shared UI components, layout structures, content publishing tools, and Firebase utilities for web applications built with React and Tailwind CSS.
-
----
+# Getting Started with `@comify.art/thuli`
 
 ## 1. Installation
-
-Install the library from npm:
 
 ```bash
 npm install @comify.art/thuli
 ```
 
-### Peer Dependencies
+## 2. Peer Dependencies
 
-Install the required peer dependencies in your host application:
+Install the peer dependencies required by your application:
 
 ```bash
 npm install react react-dom react-router-dom firebase lucide-react \
-  react-markdown katex rehype-katex remark-gfm remark-math
+  react-markdown remark-gfm
 ```
 
----
+If you use mathematical rendering in `MarkdownRenderer`, also install the optional KaTeX peers:
 
-## 2. Style Integration
+```bash
+npm install katex rehype-katex remark-math
+```
 
-`@comify.art/thuli` is designed with Tailwind CSS v4 and provides precompiled stylesheet distribution.
+## 3. Dark-First CSS & Theme Token Setup
 
-### Option A: Import Compiled CSS (Recommended)
-Import the precompiled stylesheet in your application's entrypoint (e.g., `main.tsx` or `App.tsx`):
+Import the compiled Thuli stylesheet once in your application entrypoint (`main.tsx` or `index.css`):
 
 ```tsx
 import '@comify.art/thuli/style.css';
 ```
 
-### Option B: Theme Variables Configuration
-Ensure your application provides or overrides the expected CSS custom properties in your root CSS:
+`@comify.art/thuli/style.css` includes default `:root` CSS variable fallbacks for dark-first surfaces and borders:
 
 ```css
 :root {
-  --foreground: #0f172a;
-  --background: #ffffff;
-  --primary: #2563eb;
-  --accent: #f59e0b;
-}
-
-.dark {
-  --foreground: #f8fafc;
-  --background: #0f172a;
-  --primary: #3b82f6;
-  --accent: #fbbf24;
+  --surface-canvas: #0f172a;
+  --surface-panel: #1e293b;
+  --surface-modal: #1e293b;
+  --surface-card: #1e293b;
+  --surface-input: #182236;
+  --border-default: rgba(255, 255, 255, 0.08);
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --accent-primary: #3b82f6;
 }
 ```
 
----
+To customize the palette for your brand, override these CSS variables in your host stylesheet after importing `@comify.art/thuli/style.css`.
 
-## 3. Basic Usage Example
+For class-based dark mode with Tailwind v4, add `class="dark"` to your `<html>` element.
 
-```tsx
-import React from 'react';
-import { AppShell } from '@comify.art/thuli/layout';
-import { BlogPostComponent } from '@comify.art/thuli/blog';
-import '@comify.art/thuli/style.css';
+## 4. Importing from Canonical Containers
 
-export function BlogPostPage({ slug }: { slug: string }) {
-  return (
-    <AppShell>
-      <main className="max-w-4xl mx-auto px-4 py-8">
-        <BlogPostComponent slug={slug} />
-      </main>
-    </AppShell>
-  );
-}
-```
+Prefer importing from the 4 canonical containers for optimal tree-shaking:
 
----
-
-## 4. Sample Application
-
-A complete reference application demonstrating select `@comify.art/thuli` components is available in the [`samples/`](../samples) directory:
-
-- **[`samples/simple-app`](../samples/simple-app)**: Demonstrates `Navbar`, `Footer`, `Modal`, `ConfirmationModal`, `ComingSoon`, `shareUtils`, and `@comify.art/thuli/style.css` in an interactive Vite + React app.
-
-See the [Samples Guide](../samples/README.md) for instructions on running the sample.
-
----
-
-## 5. Next Steps
-
-- Explore [Module Overview](modules.md) for full documentation on subpath entrypoints.
-- Review [Architecture Guide](architecture.md) for design patterns and dependency structures.
-- Explore [Sample Application](../samples/simple-app) for practical integration code.
-
+- `@comify.art/thuli/core` — Pure TypeScript utilities & token contracts (zero React dependencies)
+- `@comify.art/thuli/ui/primitives`, `/ui/feedback`, `/ui/layout` — Visual UI components
+- `@comify.art/thuli/integrations/calendar`, `/integrations/whatsapp`, `/integrations/firebase` — 3rd-party protocol & SDK bridges
+- `@comify.art/thuli/features/access`, `/features/publishing`, `/features/literature`, `/features/tracker`, `/features/documents` — Turnkey domain modules
