@@ -1,6 +1,6 @@
 {
   "name": "@comify.art/thuli",
-  "version": "2.0.2",
+  "version": "2.0.4",
   "description": "Shared UI components, content management systems, and utilities for comify.art applications",
   "license": "Apache-2.0",
   "repository": {
@@ -40,6 +40,10 @@
     "./ui/feedback": {
       "types": "./dist/ui/feedback/index.d.ts",
       "import": "./dist/ui/feedback/index.js"
+    },
+    "./ui/feedback/*": {
+      "types": "./dist/ui/feedback/*.d.ts",
+      "import": "./dist/ui/feedback/*.js"
     },
     "./ui/layout": {
       "types": "./dist/ui/layout/index.d.ts",
@@ -174,7 +178,7 @@
   ],
   "scripts": {
     "clean": "rm -rf dist",
-    "build:js": "tsc",
+    "build:js": "tsc && node scripts/fix-esm-extensions.mjs",
     "build:css": "npx @tailwindcss/cli -i ./src/index.css -o ./dist/style.css --minify",
     "build": "npm run clean && npm run build:js && npm run build:css",
     "type-check": "tsc --noEmit",
