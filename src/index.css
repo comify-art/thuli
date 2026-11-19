@@ -1,7 +1,7 @@
 @import "tailwindcss";
-@import "./layout/layouts.css";
-@import "./blog/ui/BlogPost.css";
-@import "./blog/admin/admin-surface.css";
+@import "./ui/layout/layouts.css";
+@import "./features/publishing/ui/BlogPost.css";
+@import "./features/publishing/admin/admin-surface.css";
 
 /* Class-based dark mode. Host apps that want dark always-on add
    `class="dark"` to the <html> element. Without this override, Tailwind v4

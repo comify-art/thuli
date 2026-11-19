@@ -1,3 +1,3 @@
-// @comify.art/thuli/router barrel
-export { default as PrivateRoute } from './PrivateRoute';
-export type { PrivateRouteProps } from './PrivateRoute';
+// Legacy backwards-compatibility shim -> @comify.art/thuli/features/access
+export { PrivateRoute } from '../features/access';
+export type { PrivateRouteProps } from '../features/access';

@@ -1,6 +1,6 @@
 {
   "name": "@comify.art/thuli",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "description": "Shared UI components, content management systems, and utilities for comify.art applications",
   "license": "Apache-2.0",
   "repository": {
@@ -21,6 +21,74 @@
       "import": "./dist/index.js"
     },
     "./style.css": "./dist/style.css",
+    "./core": {
+      "types": "./dist/core/index.d.ts",
+      "import": "./dist/core/index.js"
+    },
+    "./core/*": {
+      "types": "./dist/core/*.d.ts",
+      "import": "./dist/core/*.js"
+    },
+    "./ui": {
+      "types": "./dist/ui/index.d.ts",
+      "import": "./dist/ui/index.js"
+    },
+    "./ui/primitives": {
+      "types": "./dist/ui/primitives/index.d.ts",
+      "import": "./dist/ui/primitives/index.js"
+    },
+    "./ui/feedback": {
+      "types": "./dist/ui/feedback/index.d.ts",
+      "import": "./dist/ui/feedback/index.js"
+    },
+    "./ui/layout": {
+      "types": "./dist/ui/layout/index.d.ts",
+      "import": "./dist/ui/layout/index.js"
+    },
+    "./ui/*": {
+      "types": "./dist/ui/*.d.ts",
+      "import": "./dist/ui/*.js"
+    },
+    "./integrations": {
+      "types": "./dist/integrations/index.d.ts",
+      "import": "./dist/integrations/index.js"
+    },
+    "./integrations/calendar": {
+      "types": "./dist/integrations/calendar/index.d.ts",
+      "import": "./dist/integrations/calendar/index.js"
+    },
+    "./integrations/whatsapp": {
+      "types": "./dist/integrations/whatsapp/index.d.ts",
+      "import": "./dist/integrations/whatsapp/index.js"
+    },
+    "./integrations/firebase": {
+      "types": "./dist/integrations/firebase/index.d.ts",
+      "import": "./dist/integrations/firebase/index.js"
+    },
+    "./features": {
+      "types": "./dist/features/index.d.ts",
+      "import": "./dist/features/index.js"
+    },
+    "./features/access": {
+      "types": "./dist/features/access/index.d.ts",
+      "import": "./dist/features/access/index.js"
+    },
+    "./features/publishing": {
+      "types": "./dist/features/publishing/index.d.ts",
+      "import": "./dist/features/publishing/index.js"
+    },
+    "./features/literature": {
+      "types": "./dist/features/literature/index.d.ts",
+      "import": "./dist/features/literature/index.js"
+    },
+    "./features/tracker": {
+      "types": "./dist/features/tracker/index.d.ts",
+      "import": "./dist/features/tracker/index.js"
+    },
+    "./features/documents": {
+      "types": "./dist/features/documents/index.d.ts",
+      "import": "./dist/features/documents/index.js"
+    },
     "./layout": {
       "types": "./dist/layout/index.d.ts",
       "import": "./dist/layout/index.js"
@@ -68,14 +136,6 @@
     "./auth/*": {
       "types": "./dist/auth/*.d.ts",
       "import": "./dist/auth/*.js"
-    },
-    "./ui": {
-      "types": "./dist/ui/index.d.ts",
-      "import": "./dist/ui/index.js"
-    },
-    "./ui/*": {
-      "types": "./dist/ui/*.d.ts",
-      "import": "./dist/ui/*.js"
     },
     "./utils": {
       "types": "./dist/utils/index.d.ts",
