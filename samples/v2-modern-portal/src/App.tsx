@@ -33,6 +33,10 @@ import {
   WhatsAppSyndicateCard,
 } from '@comify.art/thuli/integrations/whatsapp';
 import {
+  ZoomRecordingPanel,
+  ZoomSchedulePanel,
+} from '@comify.art/thuli/integrations/zoom';
+import {
   AccessGateCard,
   DocumentViewer,
   UserProfileMenu,
@@ -66,6 +70,14 @@ export default function App() {
   const [notesInput, setNotesInput] = useState('');
   const [agreeTerms, setAgreeTerms] = useState(true);
   const [notificationsOn, setNotificationsOn] = useState(true);
+
+  const [zoomTopic, setZoomTopic] = useState('Acme Robotics — Quarterly Review');
+  const [zoomDate, setZoomDate] = useState('2026-12-01');
+  const [zoomTime, setZoomTime] = useState('17:00');
+  const [zoomDuration, setZoomDuration] = useState(60);
+  const [zoomRecordingUrl, setZoomRecordingUrl] = useState('https://zoom.us/rec/share/sample-recording');
+  const [zoomPasscode, setZoomPasscode] = useState('aB3$k9');
+  const [zoomSummary, setZoomSummary] = useState('• Reviewed Q4 milestones\n• Approved next sprint scope');
 
   const columns: ColumnDef<DealRow>[] = [
     { key: 'company', header: 'Company', sortable: true, render: (r) => <span className="font-semibold text-white">{r.company}</span> },
@@ -282,6 +294,35 @@ export default function App() {
                 committedAmount={10000}
                 currency="USD"
               />
+
+              <div className="p-6 rounded-2xl bg-[var(--surface-panel)] border border-[var(--border-default)] space-y-6">
+                <ZoomSchedulePanel
+                  meeting={{
+                    meetingId: '9988776655',
+                    joinUrl: 'https://zoom.us/j/9988776655',
+                    passcode: zoomPasscode,
+                  }}
+                  topic={zoomTopic}
+                  onTopicChange={setZoomTopic}
+                  date={zoomDate}
+                  onDateChange={setZoomDate}
+                  time={zoomTime}
+                  onTimeChange={setZoomTime}
+                  durationMinutes={zoomDuration}
+                  onDurationChange={setZoomDuration}
+                  onSchedule={() => setModalOpen(true)}
+                />
+                <ZoomRecordingPanel
+                  recordingUrl={zoomRecordingUrl}
+                  onRecordingUrlChange={setZoomRecordingUrl}
+                  recordingPasscode={zoomPasscode}
+                  onRecordingPasscodeChange={setZoomPasscode}
+                  recordingSummary={zoomSummary}
+                  onRecordingSummaryChange={setZoomSummary}
+                  onSync={() => setModalOpen(true)}
+                  onSave={() => setConfirmOpen(true)}
+                />
+              </div>
 
               <WhatsAppBroadcastConsole
                 event={{

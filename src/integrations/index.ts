@@ -2,3 +2,4 @@
 export * from './calendar';
 export * from './whatsapp';
 export * from './firebase';
+export * from './zoom';
