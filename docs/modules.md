@@ -9,7 +9,7 @@ Use this reference to find exact subpath imports and exported symbols.
 - **CSV (RFC 4180)**: `formatCsvCell(value)`, `buildCsvContent(items, columns)`, `downloadCsvFile(filename, csvContent)`, `copyCsvToClipboard(csvContent)`
 - **Phone (E.164)**: `formatPhoneNumberE164(phone, defaultCountry?)`, `formatPhoneForDialer(phone)`, `formatPhoneForWhatsApp(phone)`, `normalizeToE164`, `isValidE164`, `formatDisplayPhone`
 - **Cookies**: `sessionCookie` (`get`, `set`, `remove`, `hasActiveSession`), `getEffectiveCookieDomain(hostname?, rootDomain?)`, `SESSION_COOKIE_NAME` (`'app_session'`)
-- **Images & Share**: `resizeImage`, `blobToFile`, `shareContent`, `copyToClipboard`
+- **Images, Share & Metadata**: `resizeImage`, `blobToFile`, `shareContent`, `copyToClipboard`, `updateMetadata(options)` (`MetadataOptions`)
 
 ---
 
@@ -63,12 +63,13 @@ Use this reference to find exact subpath imports and exported symbols.
 ### Firebase (`@comify.art/thuli/integrations/firebase`)
 - `BaseAdminService` (`getById`, `getAll`, `getAllPage`, `create`, `update`, `delete`)
 - `Page<T>`, `PageCursor`
+- `TriggerEmailService(db, collectionName?)` (`sendEmail(payload)` — `TriggerEmailPayload`, `TriggerEmailMessage`)
 
 ---
 
 ## 4. Features (`@comify.art/thuli/features`)
 
-- **Access (`@comify.art/thuli/features/access`)**: `AdminGate`, `useAdminGate`, `PrivateRoute`, `RoleGate`, `AccessGateCard`, `UserProfileMenu`, `useAuthSession`, `LockedPitchRecordingBanner`
+- **Access (`@comify.art/thuli/features/access`)**: `AdminGate`, `useAdminGate`, `PrivateRoute`, `RoleGate`, `AccessGateCard`, `LoginCard`, `UserProfileMenu`, `useAuthSession`, `LockedPitchRecordingBanner`
 - **Publishing (`@comify.art/thuli/features/publishing`)**: `BlogList`, `BlogPostComponent`, `BlogMarkdownRenderer`, `AsyncImage`, `BlogAdminList`, `BlogEditor`, `BlogStatsWidget`, `OrphanedContentManager`, `OrphanedMediaManager`, `BlogMigration`, `BlogRemediation`, `MediaLibrary`, `MediaPicker`, `BlogAdminService`, `MediaService`
 - **Literature (`@comify.art/thuli/features/literature`)**: `BookHome`, `BookListPublic`, `ChapterTOC`, `VersePage`, `VerseNavigator`, `BookList`, `BookEditor`, `VerseList`, `VerseEditor`, `VerseImporter`, `parsePackText`, `parsePackBatch`, `verseLinkResolver`, `BookService`, `ChapterService`, `VerseService`
 - **Tracker (`@comify.art/thuli/features/tracker`)**: `TrackerApp`, `Dashboard`, `EntryForm`, `Configuration`, `MetricCard`, `TrackerService`

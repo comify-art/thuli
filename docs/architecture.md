@@ -11,7 +11,7 @@ core  <--  ui  <--  integrations  <--  features
 ### Container 1: `core` (`@comify.art/thuli/core`)
 - Contains pure TypeScript functions and CSS token constants.
 - Has zero React or DOM component dependencies.
-- Includes `tokens.ts`, `currency.ts`, `csv.ts`, `phone.ts`, `cookies.ts`, `images.ts`, and `share.ts`.
+- Includes `tokens.ts`, `currency.ts`, `csv.ts`, `phone.ts`, `cookies.ts`, `images.ts`, `share.ts`, and `metadata.ts`.
 
 ### Container 2: `ui` (`@comify.art/thuli/ui`)
 - Contains reusable visual React components without app-specific business logic.
@@ -25,11 +25,11 @@ core  <--  ui  <--  integrations  <--  features
   - `calendar/`: Builds RFC 5545 `.ics` files and Google/Outlook calendar links.
   - `whatsapp/`: Builds `wa.me` links, group manifests, `WhatsAppSyndicateCard`, and `WhatsAppBroadcastConsole`.
   - `zoom/`: Provides `ZoomSchedulePanel` and `ZoomRecordingPanel` UI controls. (Store API keys and OAuth tokens on your backend server, not in the browser.)
-  - `firebase/`: Provides `BaseAdminService` for Firestore CRUD and cursor pagination.
+  - `firebase/`: Provides `BaseAdminService` for Firestore CRUD and cursor pagination, plus `TriggerEmailService` for the Firebase Trigger Email extension.
 
 ### Container 4: `features` (`@comify.art/thuli/features`)
 - Combines UI, state, and services into complete product modules:
-  - `access/`: `AdminGate`, `useAdminGate`, `PrivateRoute`, `RoleGate`, `AccessGateCard`, `UserProfileMenu`, `useAuthSession`, `LockedPitchRecordingBanner`.
+  - `access/`: `AdminGate`, `useAdminGate`, `PrivateRoute`, `RoleGate`, `AccessGateCard`, `LoginCard`, `UserProfileMenu`, `useAuthSession`, `LockedPitchRecordingBanner`.
   - `publishing/`: Blog reader, markdown editor, media library, and Firestore/Storage services.
   - `literature/`: Book and verse reader, table of contents, pack-format parser, and services.
   - `tracker/`: Activity dashboard, trend helpers, and logging service.
