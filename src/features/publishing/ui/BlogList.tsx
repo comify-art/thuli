@@ -55,7 +55,7 @@ const BlogCard: React.FC<{ post: ListedPost, basePath: string }> = ({ post, base
                     <p className="text-sm font-medium text-[var(--accent-color)]">
                         {post.date}
                     </p>
-                    <Link to={`${basePath}/${post.id}`} className="block mt-2">
+                    <Link to={`${basePath}/${post.id}`} state={{ post }} className="block mt-2">
                         <p className="text-xl font-semibold text-white hover:text-[var(--accent-color)] transition-colors">
                             {post.title}
                         </p>
@@ -76,7 +76,7 @@ const BlogCard: React.FC<{ post: ListedPost, basePath: string }> = ({ post, base
                         </p>
                     </div>
                     <div className="ml-auto">
-                        <Link to={`${basePath}/${post.id}`} className="flex items-center text-[var(--accent-color)] hover:text-white transition-colors text-sm font-medium">
+                        <Link to={`${basePath}/${post.id}`} state={{ post }} className="flex items-center text-[var(--accent-color)] hover:text-white transition-colors text-sm font-medium">
                             Read more <ArrowRight className="ml-1 w-4 h-4" />
                         </Link>
                     </div>
