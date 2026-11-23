@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, useLocation, Link } from 'react-router-dom';
 import { fetchBlogPosts, BlogItem } from '../services';
 import { BlogAdminService } from '../services/blogService';
 import { MediaService } from '../services/mediaService';
@@ -16,12 +16,22 @@ interface BlogPostProps {
 
 export const BlogPostComponent: React.FC<BlogPostProps> = ({ indexUrl, backLink, blogService, mediaService }) => {
     const { id } = useParams<{ id: string }>();
-    const [post, setPost] = useState<BlogItem | null>(null);
+    const location = useLocation();
+    const statePost = (location.state as { post?: BlogItem } | null)?.post;
+    const initialPost = statePost && statePost.id === id ? statePost : null;
+
+    const [post, setPost] = useState<BlogItem | null>(initialPost);
     const [content, setContent] = useState<string>('');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
+        let cancelled = false;
+        setPost(initialPost);
+        setContent('');
+        setLoading(true);
+        setError(null);
+
         const loadPost = async () => {
             try {
                 let dynamicPost: (BlogItem & { content?: string }) | null = null;
@@ -49,6 +59,8 @@ export const BlogPostComponent: React.FC<BlogPostProps> = ({ indexUrl, backLink,
                     }
                 }
 
+                if (cancelled) return;
+
                 if (dynamicPost) {
                     setPost(dynamicPost);
                     setContent(dynamicPost.content || '');
@@ -62,6 +74,8 @@ export const BlogPostComponent: React.FC<BlogPostProps> = ({ indexUrl, backLink,
                         console.warn("Failed to load static index", e);
                     }
 
+                    if (cancelled) return;
+
                     if (foundPost) {
                         setPost(foundPost);
                         const res = await fetch(foundPost.markdownUrl);
@@ -69,9 +83,10 @@ export const BlogPostComponent: React.FC<BlogPostProps> = ({ indexUrl, backLink,
                             throw new Error('Failed to load blog content');
                         }
                         const text = await res.text();
+                        if (cancelled) return;
                         setContent(text);
                     } else {
-                        // Not found in either
+                        setPost(null);
                         setLoading(false);
                         return;
                     }
@@ -79,6 +94,7 @@ export const BlogPostComponent: React.FC<BlogPostProps> = ({ indexUrl, backLink,
 
                 setLoading(false);
             } catch (err) {
+                if (cancelled) return;
                 console.error(err);
                 setError('Failed to load content.');
                 setLoading(false);
@@ -86,20 +102,12 @@ export const BlogPostComponent: React.FC<BlogPostProps> = ({ indexUrl, backLink,
         };
 
         loadPost();
-    }, [id, indexUrl]);
+        return () => { cancelled = true; };
+    }, [id, indexUrl, blogService]);
 
-    if (!post) {
+    if (loading && !post) {
         return (
-            <div className="min-h-screen flex flex-col items-center justify-center text-white">
-                <h2 className="text-2xl mb-4">Post not found</h2>
-                <Link to={backLink} className="text-[var(--accent-color)] hover:underline">Back to Blog</Link>
-            </div>
-        );
-    }
-
-    if (loading) {
-        return (
-            <div className="min-h-screen flex flex-col items-center justify-center text-white">
+            <div className="min-h-screen flex flex-col items-center justify-center text-white" role="status" aria-label="Loading post">
                 <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[var(--accent-color)]"></div>
             </div>
         );
@@ -109,6 +117,15 @@ export const BlogPostComponent: React.FC<BlogPostProps> = ({ indexUrl, backLink,
         return (
             <div className="min-h-screen flex flex-col items-center justify-center text-white">
                 <h2 className="text-2xl mb-4 text-red-400">{error}</h2>
+                <Link to={backLink} className="text-[var(--accent-color)] hover:underline">Back to Blog</Link>
+            </div>
+        );
+    }
+
+    if (!post) {
+        return (
+            <div className="min-h-screen flex flex-col items-center justify-center text-white">
+                <h2 className="text-2xl mb-4">Post not found</h2>
                 <Link to={backLink} className="text-[var(--accent-color)] hover:underline">Back to Blog</Link>
             </div>
         );
@@ -128,10 +145,21 @@ export const BlogPostComponent: React.FC<BlogPostProps> = ({ indexUrl, backLink,
                         </Link>
                     </div>
 
-                    <BlogMarkdownRenderer
-                        content={content}
-                        mediaService={mediaService}
-                    />
+                    {loading && !content ? (
+                        <div className="py-12">
+                            <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">{post.title}</h1>
+                            {post.description && <p className="text-gray-400 mb-8">{post.description}</p>}
+                            <div className="flex items-center gap-3 text-gray-400" role="status" aria-label="Loading post content">
+                                <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-[var(--accent-color)]"></div>
+                                <span>Loading article...</span>
+                            </div>
+                        </div>
+                    ) : (
+                        <BlogMarkdownRenderer
+                            content={content}
+                            mediaService={mediaService}
+                        />
+                    )}
                     <div className="mt-8">
                         <hr className="border-gray-800 mb-8" />
                         <div className="flex items-center text-gray-400 mb-8 pb-8 border-b border-gray-800">
