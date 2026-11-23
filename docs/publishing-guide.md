@@ -63,7 +63,7 @@ To ensure no developer (or agent) can push directly to `main`, and that every ch
 
 Check the following settings:
 - ✅ **Require a pull request before merging**:
-  - Set **Required approvals** to `1` (or more).
+  - Set **Required approvals** to `1` (or `0` for solo-maintainer repositories, since GitHub does not allow self-approval).
   - Check **Dismiss stale pull request approvals when new commits are pushed**.
 - ✅ **Require status checks to pass before merging**:
   - Check **Require branches to be up to date before merging**.
@@ -105,20 +105,38 @@ Runs automatically on:
 3. Executes unit test suite via `npm test`.
 4. Compiles library and minified Tailwind v4 CSS via `npm run build`.
 5. Verifies package tarball generation via `npm run package`.
-6. Tests the sample application in `samples/simple-app/` to guarantee consumer compatibility.
+6. Tests both sample applications (`samples/v1-classic-starter/` and `samples/v2-modern-portal/`) to verify v1 compatibility and v2 container bundling.
 
 ### 3.3 Automated Publishing (`.github/workflows/publish.yml`)
 When you release a new version:
-1. **Bump version locally**:
+
+**Option A: Version bump + release on `main`** (if `package.json` is not bumped yet):
+1. Run `make release-patch`, `make release-minor`, or `make release-major`.
+
+**Option B: Tag and release an already-merged version** (if `package.json` was bumped in a PR):
+1. Sync `main` with the merged PR:
    ```bash
-   npm version patch   # or minor, major
+   git checkout main
+   git pull origin main
    ```
-2. **Execute Combined Release** (pushes commit + tag, builds package, and creates GitHub Release):
+2. Create the annotated Git tag matching `package.json` (for example, `v2.0.4`):
+   ```bash
+   git tag -a v2.0.4 -m "Release v2.0.4"
+   ```
+3. Run `make release`:
    ```bash
    make release
    ```
-   *(Or one-step: `make release-patch`, `make release-minor`, `make release-major`)*
+   `make release` pushes the tag to `origin`, builds the release tarball, and creates the GitHub Release, which triggers `.github/workflows/publish.yml` to run CI checks and publish to npmjs.org with OIDC Trusted Publishing provenance.
 
-3. The GitHub Actions workflow (`publish.yml`) will automatically:
-   - Run the complete CI verification suite (type-checks, tests, builds).
-   - Publish the package to npmjs.org with cryptographic **npm provenance** using OIDC **Trusted Publishing** (no persistent tokens needed).
+### 3.4 Verify the npm Publish
+1. Watch the GitHub Actions workflow (`Publish to npmjs.org`):
+   ```bash
+   gh run list --workflow=publish.yml --limit=3
+   gh run watch
+   ```
+2. Confirm the new version is live on npm:
+   ```bash
+   npm view @comify.art/thuli version
+   ```
+3. Check the package page and provenance badge at `https://www.npmjs.com/package/@comify.art/thuli`.
