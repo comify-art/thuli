@@ -10,10 +10,10 @@
 
 | Container | Import Path | Highlights |
 | :--- | :--- | :--- |
-| **1. Core** | `@comify.art/thuli/core` | `THULI_TOKENS`, currency & E.164 phone formatters, RFC 4180 CSV, cookies, image/share helpers |
+| **1. Core** | `@comify.art/thuli/core` | `THULI_TOKENS`, currency & E.164 phone formatters, RFC 4180 CSV, cookies, image/share/`updateMetadata` helpers |
 | **2. UI** | `@comify.art/thuli/ui` (`/primitives`, `/feedback`, `/layout`) | `Modal`, `ConfirmationModal`, `Alert`, `Drawer`, `DataTable`, `MetricStrip`, `ProgressMeter`, `StatusBadge`, `FormField`, `ComingSoon`, `MarkdownRenderer`, `AppShell`, `Navbar`, `Footer` |
-| **3. Integrations** | `@comify.art/thuli/integrations` (`/calendar`, `/whatsapp`, `/zoom`, `/firebase`) | `.ics` & calendar deep links, `WhatsAppSyndicateCard`, `WhatsAppBroadcastConsole`, `ZoomSchedulePanel`, `ZoomRecordingPanel`, `BaseAdminService` |
-| **4. Features** | `@comify.art/thuli/features` (`/access`, `/publishing`, `/literature`, `/tracker`, `/documents`) | `AdminGate`, `RoleGate`, `AccessGateCard`, `UserProfileMenu`, `BlogList`/`Editor`, `BookHome`/`VersePage`, `TrackerApp`, `DocumentViewer` |
+| **3. Integrations** | `@comify.art/thuli/integrations` (`/calendar`, `/whatsapp`, `/zoom`, `/firebase`) | `.ics` & calendar deep links, `WhatsAppSyndicateCard`, `WhatsAppBroadcastConsole`, `ZoomSchedulePanel`, `ZoomRecordingPanel`, `BaseAdminService`, `TriggerEmailService` |
+| **4. Features** | `@comify.art/thuli/features` (`/access`, `/publishing`, `/literature`, `/tracker`, `/documents`) | `AdminGate`, `RoleGate`, `AccessGateCard`, `LoginCard`, `UserProfileMenu`, `BlogList`/`Editor`, `BookHome`/`VersePage`, `TrackerApp`, `DocumentViewer` |
 | **Styles** | `@comify.art/thuli/style.css` | Precompiled Tailwind CSS v4 bundle with dark-first `:root` token fallbacks |
 
 > Legacy v1 subpaths (`/layout`, `/blog`, `/verse-books`, `/services`, `/tracker`, `/auth`, `/ui`, `/utils`, `/router`) remain supported via thin re-export shims.

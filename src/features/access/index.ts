@@ -9,3 +9,4 @@ export * from './AccessGateCard';
 export * from './LockedPitchRecordingBanner';
 export * from './RoleGate';
 export * from './UserProfileMenu';
+export * from './LoginCard';

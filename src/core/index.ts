@@ -6,3 +6,4 @@ export * from './utils/phone';
 export * from './utils/cookies';
 export * from './utils/images';
 export * from './utils/share';
+export * from './utils/metadata';
