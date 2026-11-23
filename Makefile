@@ -65,7 +65,8 @@ release: ## Publish: Push tag v$(VERSION) and create GitHub Release (triggers OI
 	@printf "🔒 \033[1;35mGitHub Action 'Publish to npmjs.org' triggered via Trusted Publishing OIDC.\033[0m\n\n"
 
 .PHONY: pr-release
-pr-release: ## Ship: Branch, commit, open PR, wait for merge into main, tag, and publish release
+pr-release: ## Ship: Branch, commit, open PR, wait for manual merge, release, and watch npm publish
+	@printf "\n\033[1;36m━━━ Step 1/5: Prepare branch & commit ━━━\033[0m\n"
 	@BRANCH="$$(git rev-parse --abbrev-ref HEAD)"; \
 	if [ "$$BRANCH" = "main" ]; then \
 		BRANCH="release/v$(VERSION)"; \
@@ -76,12 +77,14 @@ pr-release: ## Ship: Branch, commit, open PR, wait for merge into main, tag, and
 		git commit -m "$${MSG:-chore(release): v$(VERSION)}"; \
 	fi; \
 	git push -u origin "$$BRANCH"; \
+	printf "\n\033[1;36m━━━ Step 2/5: Open PR & await manual approval/merge ━━━\033[0m\n"; \
 	PR_URL="$$(gh pr view --json url -q .url 2>/dev/null || true)"; \
 	if [ -z "$$PR_URL" ]; then \
 		PR_URL="$$(gh pr create --base main --head "$$BRANCH" --title "Release v$(VERSION)" --body "Automated release PR for v$(VERSION).")"; \
 	fi; \
-	printf "🔗 \033[1;34mPR ready:\033[0m %s\n" "$$PR_URL"; \
-	printf "⏳ \033[1;33mWaiting for PR to be merged into main...\033[0m\n"; \
+	printf "🔗 PR ready: %s\n" "$$PR_URL"; \
+	printf "👉 Action required: Open the PR link above on GitHub, approve it, and click Merge.\n"; \
+	printf "⏳ Waiting for PR to be merged into main...\n"; \
 	until [ "$$(gh pr view "$$PR_URL" --json state -q .state)" = "MERGED" ]; do \
 		STATE="$$(gh pr view "$$PR_URL" --json state -q .state)"; \
 		if [ "$$STATE" = "CLOSED" ]; then \
@@ -89,9 +92,23 @@ pr-release: ## Ship: Branch, commit, open PR, wait for merge into main, tag, and
 		fi; \
 		sleep 5; \
 	done; \
+	printf "✅ PR merged!\n\n"; \
+	printf "\033[1;36m━━━ Step 3/5: Sync main, tag v$(VERSION) & create GitHub Release ━━━\033[0m\n"; \
 	git checkout main && git pull origin main; \
 	git tag -f "v$(VERSION)"; \
-	$(MAKE) release
+	$(MAKE) release; \
+	printf "\033[1;36m━━━ Step 4/5: Watch GitHub Actions publish workflow ━━━\033[0m\n"; \
+	sleep 5; \
+	RUN_ID="$$(gh run list --workflow=publish.yml --limit 1 --json databaseId -q '.[0].databaseId')"; \
+	if [ -n "$$RUN_ID" ]; then \
+		gh run watch "$$RUN_ID" --exit-status; \
+	fi; \
+	printf "\n\033[1;36m━━━ Step 5/5: Verify @comify.art/thuli@$(VERSION) on npmjs.org ━━━\033[0m\n"; \
+	printf "⏳ Waiting for npm registry propagation...\n"; \
+	until [ "$$(npm view @comify.art/thuli version 2>/dev/null)" = "$(VERSION)" ]; do \
+		sleep 5; \
+	done; \
+	printf "🎉 @comify.art/thuli@$(VERSION) is live on npm: https://www.npmjs.com/package/@comify.art/thuli\n\n"
 
 .PHONY: release-patch
 release-patch: ## Release: Bump patch version (x.x.+1) and publish release
